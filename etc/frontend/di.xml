@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Amasty\InvisibleCaptcha\Block\Captcha">
+        <plugin name="dt_amasty_invisiblecaptcha_optimizer" type="Dathard\GoogleRecaptchaLoadDelay\Plugin\Amasty\DelayLoadPlugin"/>
+    </type>
+    <type name="Mageplaza\GoogleRecaptcha\Block\Captcha">
+        <plugin name="dt_mageplaza_googlerecaptcha_optimizer" type="Dathard\GoogleRecaptchaLoadDelay\Plugin\Mageplaza\DelayLoadPlugin"/>
+    </type>
+</config>
