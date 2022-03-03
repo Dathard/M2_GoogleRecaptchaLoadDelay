@@ -11,14 +11,10 @@ class XMagentoInitDecorator implements DecoratorInterface
      */
     public function decorate(DOMElement $script): string
     {
-        $script->setAttribute('type', 'defer-load');
+        $script->setAttribute('type', 'recaptcha-defer-load');
         $scriptHtml = $script->ownerDocument->saveHTML($script);
-        $deferLoadScript = $this->getDeferLoadScript();
 
-        return <<<HTML
-<div class="x-magento-init-defer-load">$scriptHtml</div>
-$deferLoadScript
-HTML;
+        return $scriptHtml . $this->getDeferLoadScript();
     }
 
     /**
@@ -34,9 +30,11 @@ HTML;
         document.addEventListener('click', initGoogleRecaptcha);
 
         function initGoogleRecaptcha() {
-            var deferScriptWrapper = $('div.x-magento-init-defer-load');
-            deferScriptWrapper.children(":first").attr("type", "text/x-magento-init");
-            deferScriptWrapper.trigger('contentUpdated');
+            var deferScripts = $('script[type=recaptcha-defer-load]');
+            deferScripts.attr("type", "text/x-magento-init");
+            deferScripts.wrapAll('<div id="recaptcha-defer-load"></div>');
+
+            $('div#recaptcha-defer-load').trigger('contentUpdated');
 
             document.removeEventListener('mouseover', initGoogleRecaptcha);
             window.removeEventListener('scroll', initGoogleRecaptcha);
