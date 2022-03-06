@@ -10,8 +10,6 @@ class DelayLoadPlugin extends AbstractOptimizerPlugin
     protected $searchPattern = '/<script.*text\/x\-magento\-init([\s\S]*?)<\/script>/';
 
     /**
-     * Prepare recaptcha connection script for delay loading
-     *
      * @param ReCaptcha $subject
      * @param string $result
      * @return string
