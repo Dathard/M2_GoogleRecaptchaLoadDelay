@@ -6,6 +6,8 @@ use Dathard\GoogleRecaptchaLoadDelay\Model\Processor;
 
 class AbstractOptimizerPlugin
 {
+    protected $searchPattern = '/<script[\s\S]*?\/script>/';
+
     /**
      * @var Processor
      */
@@ -28,7 +30,7 @@ class AbstractOptimizerPlugin
      */
     protected function prepare(string $html): string
     {
-        preg_match_all('/<script[\s\S]*?\/script>/', $html,  $scripts);
+        preg_match_all($this->searchPattern, $html,  $scripts);
         $scripts = array_shift($scripts);
 
         foreach ($scripts as $script) {
