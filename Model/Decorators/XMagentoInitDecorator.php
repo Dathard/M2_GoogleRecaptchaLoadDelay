@@ -6,42 +6,24 @@ use DOMElement;
 
 class XMagentoInitDecorator implements DecoratorInterface
 {
+    private $useDeferLoadScript = false;
+
     /**
      * @inheritDoc
      */
     public function decorate(DOMElement $script): string
     {
+        $this->useDeferLoadScript = true;
         $script->setAttribute('type', 'recaptcha-defer-load');
-        $scriptHtml = $script->ownerDocument->saveHTML($script);
 
-        return $scriptHtml . $this->getDeferLoadScript();
+        return $script->ownerDocument->saveHTML($script);
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    private function getDeferLoadScript(): string
+    public function useDeferLoadScript(): bool
     {
-        return <<<SCRIPT
-<script type="text/javascript">
-    require(['jquery', 'domReady!'], function ($) {
-        document.addEventListener('mouseover', initGoogleRecaptcha);
-        window.addEventListener('scroll', initGoogleRecaptcha);
-        document.addEventListener('click', initGoogleRecaptcha);
-
-        function initGoogleRecaptcha() {
-            var deferScripts = $('script[type=recaptcha-defer-load]');
-            deferScripts.attr("type", "text/x-magento-init");
-            deferScripts.wrapAll('<div id="recaptcha-defer-load"></div>');
-
-            $('div#recaptcha-defer-load').trigger('contentUpdated');
-
-            document.removeEventListener('mouseover', initGoogleRecaptcha);
-            window.removeEventListener('scroll', initGoogleRecaptcha);
-            document.removeEventListener('click', initGoogleRecaptcha);
-        }
-    });
-</script>
-SCRIPT;
+        return $this->useDeferLoadScript;
     }
 }

@@ -7,6 +7,11 @@ use Mageplaza\GoogleRecaptcha\Block\Captcha;
 
 class DelayLoadPlugin extends AbstractOptimizerPlugin
 {
+    /**
+     * @param Captcha $subject
+     * @param $result
+     * @return string
+     */
     public function afterToHtml(
         Captcha $subject,
         $result
