@@ -11,4 +11,5 @@ This extension allows to delay the initialization of the recaptcha until the use
 ## Supported captcha extensions for Magento 2
 - Amasty Invisible Captcha
 - Mageplaza Google Recaptcha
+- MSP ReCaptcha (default for M2.3.*)
 - Magento UI Recaptcha (default for M2.4.*)
